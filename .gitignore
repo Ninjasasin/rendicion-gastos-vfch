@@ -1,0 +1,13 @@
+# Nunca subir datos de ejecutivos
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.heic
+cartola_*.json
+boletas.json
+cruce_*.json
+grilla_*.json
+salida/
+__pycache__/
+fondo.json

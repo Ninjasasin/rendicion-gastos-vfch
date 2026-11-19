@@ -1,0 +1,43 @@
+{
+ "_LEEME": "Parámetros que usan los scripts. Cada uno está explicado en '1. Contexto/reglas-de-negocio.md'. Si cambias uno aquí, anota el cambio con fecha en '3. Memoria/decisiones.md' y vuelve a correr el caso de prueba.",
+
+ "politica_por_cartola": {
+  "USD": "USD - TC - VFCH - ECA",
+  "CLP": "CLP - TC - VFCH - ECA"
+ },
+ "nombre_informe_por_cartola": {
+  "USD": "TC Internacional",
+  "CLP": "TC Nacional"
+ },
+ "categoria_por_tipo_de_rendicion": {
+  "tc_corporativa": "Gastos De Viajes",
+  "fondo_por_rendir": "Gastos De Viajes",
+  "visita_planta": "Gastos Visitas",
+  "tc_personal": null
+ },
+ "categorias_validas": ["Gastos De Viajes", "Gastos Visitas", "Gtos Representacion", "Gastos De Oficina",
+   "Desarrollo Y Promocion", "Gastos Marketing (Corporativo)", "Gastos Marketing A&P", "Gastos Equipos Computacion",
+   "Servicios Y Equipos Comunicación Ti", "Suscripciones Y Membresías", "Petroleo/Bencina", "Suministros"],
+ "categorias_definidas": ["Gastos De Viajes", "Gastos Visitas"],
+ "notas_validas": ["Alimentación", "Alojamiento", "Movilización", "Otros"],
+ "nota_por_defecto": "Otros",
+
+ "cruce_tolerancia_dias": 2,
+ "medios_de_pago_personales": ["efectivo", "otra_tarjeta"],
+
+ "cartola_no_se_rinde_si_contiene": ["MONTO CANCELADO", "COMISION", "IMPUESTO", "INTERES"],
+
+ "sufijo_boleta_personal": " - personal",
+
+ "fondo_politica_por_moneda": {
+  "USD": "USD - REEM - VFCH - ECA",
+  "CLP": "CLP - REEM - VFCH - ECA"
+ },
+ "fondo_nombre_informe": "Fondo por rendir - {motivo} - {mes} {anio}",
+ "fondo_tipo_documento": "Bol y otros Gastos VFCH - 144",
+ "fondo_rut_proveedor_extranjero": "11111111-1",
+ "fondo_conversion": "primero probar moneda original en Rindegastos; si no deja, tipo de cambio que entrega el ejecutivo",
+
+ "modo_creacion_gastos": "multiples",
+ "crear_lineas_sin_boleta": false
+}
