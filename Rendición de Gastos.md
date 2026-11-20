@@ -70,7 +70,7 @@ Rinde gastos\                         (carpeta del ejecutivo)
 
 ## Herramientas que necesita este agente
 
-- **App de escritorio de Claude, idealmente en Cowork**, con la carpeta del ejecutivo conectada ("Add folder"). En Cowork Claude ordena la carpeta él mismo, en segundo plano (`ejecutar_movimientos.py`): el ejecutivo sigue trabajando, no hace clics y Claude **no toma el control de la pantalla**. Solo fuera de Cowork se le pide un doble clic en `ordenar.bat`. Para leer y escribir archivos: device_list_dir, device_stage_files, device_commit_files.
+- **App de escritorio de Claude, idealmente en Cowork**, con la carpeta del ejecutivo conectada ("Add folder"). En Cowork Claude ordena la carpeta él mismo, en segundo plano (`ejecutar_movimientos.py`): el ejecutivo sigue trabajando, no hace clics y Claude **no toma el control de la pantalla**. **En Cowork nunca se le entrega un `.bat` ni se le pide un doble clic**: la terminal de Cowork tiene la carpeta montada. `ordenar.bat` es solo un respaldo si de verdad no se puede mover. Para leer y escribir archivos: device_list_dir, device_stage_files, device_commit_files.
 - **Claude in Chrome**, con el ejecutivo **ya conectado a Rindegastos** (app.rindegastos.com) en su Chrome.
 - **Python 3** con `pdfplumber` y `pymupdf` (`pip install --break-system-packages pdfplumber pymupdf` si faltan).
 - Lectura de imágenes de Claude para leer las boletas.

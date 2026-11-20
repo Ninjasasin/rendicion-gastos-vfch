@@ -21,7 +21,7 @@ Deja en <carpeta_trabajo>/salida/:
                           (cartolas marcadas y cruce), ya en su carpeta de destino
   nuevos.json             lista de esos archivos (ruta relativa dentro de la carpeta del ejecutivo)
   movimientos.json        qué original va a dónde y con qué nombre
-  ordenar.ps1 / .bat      lo ejecutan (ver movimientos.py y la skill)
+  (se ejecuta con ejecutar_movimientos.py; ver la skill)
 """
 import json, os, shutil, sys
 import rutas as R
@@ -109,7 +109,7 @@ def main():
     movs = M.escribir(salida, movs, 'Ordenar rendición ' + cruce.get('periodo', ''))
 
     print('Orden preparado en', salida)
-    print('  %d archivos a mover/renombrar (movimientos.json, ordenar.ps1)' % len(movs))
+    print('  %d archivos a mover/renombrar (movimientos.json)' % len(movs))
     carpetas = {}
     for o, d in movs:
         carpetas[d.split('/')[0]] = carpetas.get(d.split('/')[0], 0) + 1

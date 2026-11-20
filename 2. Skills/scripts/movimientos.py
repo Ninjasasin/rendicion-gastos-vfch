@@ -5,13 +5,13 @@ No se corre solo: lo usan preparar_archivo.py y ordenar_boletas.py.
 
 Escribe en <carpeta_trabajo>/salida/:
   movimientos.json   lista de {"origen": ruta relativa, "destino": ruta relativa} dentro de la carpeta del ejecutivo
-  ordenar.ps1        PowerShell que hace los movimientos (va en la raíz de la carpeta del ejecutivo)
-  ordenar.bat        doble clic para correr ordenar.ps1 (respaldo fuera de Cowork)
 
 Cómo se ejecuta (ver la skill):
-  - Cowork (vía normal): Claude corre ejecutar_movimientos.py con movimientos.json, en segundo plano, sin clics del
-    ejecutivo y sin tomar el control de la pantalla. Si la terminal es Windows sin Python: ordenar.ps1 -Si.
-  - Fuera de Cowork: se copian ordenar.ps1 y ordenar.bat y el ejecutivo hace doble clic en ordenar.bat.
+  - Cowork (siempre): Claude corre ejecutar_movimientos.py con movimientos.json en su terminal, en segundo plano.
+    NO se genera ni se entrega ningún .bat.
+  - Respaldo, SOLO si la sesión de verdad no puede mover archivos (se intentó y falló, o no es Cowork):
+      python -X utf8 movimientos.py --respaldo <carpeta_trabajo>/salida
+    genera ordenar.ps1 (PowerShell que hace los movimientos) y ordenar.bat (doble clic del ejecutivo).
 
 Reglas del script:
   - Solo MUEVE (renombrar = mover con otro nombre). Nunca borra boletas ni cartolas.
@@ -42,6 +42,18 @@ def escribir(salida, movs, titulo='Ordenar boletas y cartolas'):
     movs = [(o, d) for o, d in movs if o.replace('\\', '/') != d.replace('\\', '/')]
     json.dump([{'origen': o, 'destino': d} for o, d in movs],
               open(os.path.join(salida, 'movimientos.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # ordenar.ps1/.bat NO se generan por defecto: en Cowork Claude mueve con ejecutar_movimientos.py.
+    # Solo si mover falló de verdad: python movimientos.py --respaldo <salida>
+    for viejo in ('ordenar.ps1', 'ordenar.bat'):
+        p = os.path.join(salida, viejo)
+        if os.path.exists(p):
+            os.remove(p)
+    return movs
+
+
+def escribir_respaldo(salida, titulo='Ordenar boletas y cartolas'):
+    """Genera ordenar.ps1 y ordenar.bat desde salida/movimientos.json (respaldo fuera de Cowork)."""
+    movs = [(m['origen'], m['destino']) for m in json.load(open(os.path.join(salida, 'movimientos.json'), encoding='utf-8'))]
 
     # una línea "$movs += ,@(origen, destino)" por archivo: así la lista no se "aplana" aunque haya un solo archivo
     filas = '\n'.join('$movs += ,@(%s, %s)' % (_ps(o.replace('/', '\\')), _ps(d.replace('/', '\\'))) for o, d in movs)
@@ -92,3 +104,12 @@ if ($faltan -eq 0) {
     with open(os.path.join(salida, 'ordenar.bat'), 'w', encoding='ascii', newline='') as fh:
         fh.write(bat)
     return movs
+
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) == 3 and sys.argv[1] == '--respaldo':
+        n = len(escribir_respaldo(sys.argv[2]))
+        print('Respaldo generado: ordenar.ps1 y ordenar.bat (%d movimientos) en %s' % (n, sys.argv[2]))
+    else:
+        sys.exit('Uso: python -X utf8 movimientos.py --respaldo <carpeta_trabajo>/salida')

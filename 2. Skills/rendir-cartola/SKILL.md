@@ -152,16 +152,16 @@ Carga las herramientas de Chrome en una sola llamada a ToolSearch (tabs_context_
 python -X utf8 preparar_archivo.py <carpeta_trabajo> "<carpeta de fotos>"
 ```
 - Arma el orden final (`reglas-de-negocio.md` §7): cada boleta rendida se **renombra por su monto y se mueve** a la carpeta del informe junto con su cartola; las no rendidas van a `AAAA-MM` (personales como `<monto> - personal`); la cartola que no tuvo boletas va igual a una carpeta con el nombre que habría tenido su informe. **No se hacen copias.**
-- Deja en `salida/`: `movimientos.json` (qué original va a dónde), `ordenar.ps1` y `ordenar.bat` (respaldo para Windows / sin Cowork) y `nuevos/` + `nuevos.json` (archivos que generó el agente: cartolas marcadas y `cruce_AAAA-MM.json`).
+- Deja en `salida/`: `movimientos.json` (qué original va a dónde) y `nuevos/` + `nuevos.json` (archivos que generó el agente: cartolas marcadas y `cruce_AAAA-MM.json`).
 
 ### Ejecutar el orden
-1. Copia cada archivo de `nuevos.json` a la carpeta del ejecutivo con `device_commit_files` (`devicePath` = carpeta del ejecutivo + la ruta de `nuevos.json`).
-2. **Vía normal (Cowork): lo haces tú, en segundo plano.** El ejecutivo no hace clics y tú **no tomas el control de la pantalla** (nada de herramientas `computer_*`): él sigue trabajando mientras ordenas.
-   - Si tienes terminal con la carpeta conectada (la terminal de Cowork o `device_bash`): `python -X utf8 ejecutar_movimientos.py "<carpeta del ejecutivo>" <trabajo>/salida/movimientos.json`.
-   - Si esa terminal es Windows sin Python: copia `salida/ordenar.ps1` a la raíz de la carpeta y córrelo con `powershell -NoProfile -ExecutionPolicy Bypass -File ordenar.ps1 -Si` (se borra solo).
-   - Si tus herramientas de archivos pueden mover/renombrar directamente en la carpeta conectada, también sirve: aplica `movimientos.json` con las mismas reglas (no pisar, " (2)", registro).
-3. **Solo si la sesión no puede mover archivos** (chat fuera de Cowork): dile al ejecutivo que lo ideal es abrir un chat en **Cowork**. Si igual quiere seguir aquí, copia `ordenar.ps1` y `ordenar.bat` a la raíz y pídele un doble clic en **ordenar.bat** (muestra la lista y pide confirmar).
-4. **Control:** `device_list_dir` (recursivo): cada archivo de `movimientos.json` está en su destino, no quedan boletas ni cartolas sueltas de esta rendición, y no queda ningún `ordenar.ps1`/`ordenar.bat` suelto. Si algo no calza, lee el `ordenar_<fecha>.log`.
+1. Copia cada archivo de `nuevos.json` a la carpeta del ejecutivo (en Cowork, con `cp` en tu terminal; si no, con `device_commit_files`, `devicePath` = carpeta del ejecutivo + la ruta de `nuevos.json`).
+2. **En Cowork lo haces tú, siempre, en segundo plano.** El ejecutivo no hace clics y tú no tomas el control de la pantalla. **En Cowork nunca le entregues un `.bat` ni le pidas un doble clic.**
+   - En Cowork tienes terminal (la herramienta Bash) y la carpeta conectada está montada en ella, aunque no exista `device_bash`. Busca su ruta en la terminal (por ejemplo `find / -maxdepth 6 -type d -name "Rinde gastos" 2>/dev/null`).
+   - Corre: `python -X utf8 ejecutar_movimientos.py "<ruta de la carpeta en tu terminal>" <trabajo>/salida/movimientos.json`.
+   - Si te falla, lee el error y arréglalo (ruta, Python, permisos) antes de pensar en otra vía.
+3. **Respaldo, solo si de verdad no puedes mover** (lo intentaste y falló sin arreglo, o el chat no es Cowork): dile al ejecutivo qué falló y que lo ideal es Cowork. Si igual quiere seguir, genera el respaldo con `python -X utf8 movimientos.py --respaldo <trabajo>/salida`, copia `ordenar.ps1` y `ordenar.bat` a la raíz y pídele doble clic en **ordenar.bat**.
+4. **Control:** revisa la carpeta (en tu terminal o con `device_list_dir`): cada archivo de `movimientos.json` está en su destino, no quedan boletas ni cartolas sueltas de esta rendición, y no queda ningún `ordenar.ps1`/`ordenar.bat` suelto. Si algo no calza, lee el `ordenar_<fecha>.log`.
 - El script **solo mueve**: nunca borra boletas ni cartolas, y si un nombre ya existe agrega " (2)".
 - Si una boleta pendiente de un `AAAA-MM` anterior se rindió ahora, el script la mueve desde esa carpeta a la del informe.
 

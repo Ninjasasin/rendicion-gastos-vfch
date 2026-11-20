@@ -10,7 +10,7 @@ y, si el ejecutivo lo dijo, "personal": true). Cada boleta va a:
     <AAAA-MM de su fecha>\<monto> - personal.<ext>  si el ejecutivo dijo que es personal
 Repetidos: "49,50 (2).jpeg". Las que ya están en su carpeta y con su nombre no se mueven.
 
-Deja en <carpeta_trabajo>/salida/ movimientos.json, ordenar.ps1 y ordenar.bat (ver movimientos.py).
+Deja en <carpeta_trabajo>/salida/ movimientos.json (ver movimientos.py; se ejecuta con ejecutar_movimientos.py).
 """
 import json, os, sys
 import rutas as R
