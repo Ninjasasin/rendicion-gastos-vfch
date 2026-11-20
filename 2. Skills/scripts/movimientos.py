@@ -6,22 +6,18 @@ No se corre solo: lo usan preparar_archivo.py y ordenar_boletas.py.
 Escribe en <carpeta_trabajo>/salida/:
   movimientos.json   lista de {"origen": ruta relativa, "destino": ruta relativa} dentro de la carpeta del ejecutivo
   ordenar.ps1        PowerShell que hace los movimientos (va en la raíz de la carpeta del ejecutivo)
-  ordenar.bat        doble clic para correr ordenar.ps1 mostrando la lista y pidiendo confirmar (lo usa el ejecutivo)
-  ordenar_si.bat     doble clic que corre ordenar.ps1 -Si, sin preguntas (lo usa Claude desde el Explorador)
+  ordenar.bat        doble clic para correr ordenar.ps1 (respaldo fuera de Cowork)
 
 Cómo se ejecuta (ver la skill):
-  - Sesión con terminal en el PC (Cowork, device_bash): Claude copia ordenar.ps1 a la carpeta del ejecutivo y lo
-    corre con:  powershell -NoProfile -ExecutionPolicy Bypass -File ordenar.ps1 -Si
-  - Sesión sin terminal pero con control del computador: se copian ordenar.ps1 y ordenar_si.bat y Claude hace
-    doble clic en ordenar_si.bat desde el Explorador de archivos (probado el 20-11-2026).
-  - Sin nada de lo anterior: se copian ordenar.ps1 y ordenar.bat y el ejecutivo hace doble clic en ordenar.bat
-    (le muestra la lista y le pide confirmar).
+  - Cowork (vía normal): Claude corre ejecutar_movimientos.py con movimientos.json, en segundo plano, sin clics del
+    ejecutivo y sin tomar el control de la pantalla. Si la terminal es Windows sin Python: ordenar.ps1 -Si.
+  - Fuera de Cowork: se copian ordenar.ps1 y ordenar.bat y el ejecutivo hace doble clic en ordenar.bat.
 
 Reglas del script:
   - Solo MUEVE (renombrar = mover con otro nombre). Nunca borra boletas ni cartolas.
   - Si el destino ya existe, agrega " (2)", " (3)"… (no pisa nada).
   - Si un origen ya no está (lo movió el ejecutivo), lo avisa y sigue.
-  - Deja un registro "ordenar_<fecha>.log" y, al terminar bien, se borra a sí mismo (ordenar.ps1 y los .bat).
+  - Deja un registro "ordenar_<fecha>.log" y, al terminar bien, se borra a sí mismo (ordenar.ps1 y ordenar.bat).
 """
 import json, os
 
@@ -85,7 +81,6 @@ foreach ($m in $movs) {
 Write-Host ('Listo: ' + $ok + ' movidos, ' + $faltan + ' no encontrados. Registro: ' + (Split-Path -Leaf $log))
 if ($faltan -eq 0) {
   Remove-Item -LiteralPath (Join-Path $base 'ordenar.bat') -ErrorAction SilentlyContinue
-  Remove-Item -LiteralPath (Join-Path $base 'ordenar_si.bat') -ErrorAction SilentlyContinue
   Remove-Item -LiteralPath $PSCommandPath -ErrorAction SilentlyContinue
 }
 ''' % {'titulo': titulo.replace("'", "''"), 'filas': filas, 'n': len(movs)}
@@ -96,8 +91,4 @@ if ($faltan -eq 0) {
            'powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ordenar.ps1"\r\npause\r\n')
     with open(os.path.join(salida, 'ordenar.bat'), 'w', encoding='ascii', newline='') as fh:
         fh.write(bat)
-    bat_si = ('@echo off\r\nchcp 65001 >nul\r\n'
-              'powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ordenar.ps1" -Si\r\n')
-    with open(os.path.join(salida, 'ordenar_si.bat'), 'w', encoding='ascii', newline='') as fh:
-        fh.write(bat_si)
     return movs

@@ -85,7 +85,7 @@ Igual que `rendir-cartola` paso 7, con estas diferencias:
 python -X utf8 preparar_archivo.py <carpeta_trabajo> "<carpeta de fotos>" --cruce cruce_fondo_AAAA-MM.json
 ```
 - `<Nombre del informe>\` con las boletas rendidas (renombradas por monto); `AAAA-MM\` con las personales (`<monto> - personal`). Las que quedaron "fuera" no se mueven.
-- Ejecuta el orden igual que `rendir-cartola` paso 8 ("Ejecutar el orden"): copiar `nuevos.json`, correr `ordenar.ps1` (con terminal) o doble clic en `ordenar_si.bat` desde el Explorador (con control del computador) o pedir doble clic en `ordenar.bat` (sin nada), y verificar.
+- Ejecuta el orden igual que `rendir-cartola` paso 8 ("Ejecutar el orden"): copiar `nuevos.json`, en Cowork lo haces tú en segundo plano con `ejecutar_movimientos.py` (sin clics del ejecutivo ni control de pantalla); solo fuera de Cowork se le pide doble clic en `ordenar.bat`, y verificar.
 
 ## Paso 7 · Cerrar
 Resumen: informe (nombre, N gastos, total y moneda; en borrador), personales, fuera, conversiones hechas (tipo de cambio y quién lo dio), avisos (pro forma, propinas, categorías a revisar) y cómo quedó ordenada la carpeta. Si se aprendió algo de la grilla REEM (offsets reales, si acepta otra moneda), anótalo en `3. Memoria/reglas-aprendidas.md` y en `1. Contexto/rindegastos.md`.

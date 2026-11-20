@@ -17,7 +17,7 @@ Hecho para los ejecutivos de Viñedos Familia Chadwick (VFCH). Mantenido por Ign
    - el estado de cuenta en PDF (el que llega del banco), y
    - las fotos de tus boletas (como lleguen, por ejemplo de WhatsApp).
 2. Abre **Rindegastos** en Chrome con tu sesión iniciada, y ten activa la extensión **Claude in Chrome**.
-3. En la **app de escritorio de Claude**, abre un chat en **Cowork** y conecta tu carpeta `Rinde gastos` con **"Add folder"**. (En Cowork Claude puede ordenar tu carpeta directamente; en otro tipo de chat te pedirá un doble clic en `ordenar.bat`.)
+3. En la **app de escritorio de Claude**, abre un chat en **Cowork** y conecta tu carpeta `Rinde gastos` con **"Add folder"**. (En Cowork Claude ordena tu carpeta solo, mientras tú sigues trabajando; en otro tipo de chat te pedirá un doble clic en `ordenar.bat`.)
 4. Escríbele a Claude:
    > Usa el agente https://github.com/Ninjasasin/rendicion-gastos-vfch y rinde mi cartola.
 5. Claude te muestra lo que va a cargar y te pide el OK. Al final te deja la cartola marcada, el informe en borrador y un resumen de lo que falta.

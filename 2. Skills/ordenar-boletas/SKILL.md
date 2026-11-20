@@ -26,9 +26,8 @@ Muestra qué boleta va a qué carpeta y con qué nombre (`2026-10\49,50.jpeg`; r
 
 ## Paso 4 · Ordenar (renombrar y mover, sin copias)
 Igual que `rendir-cartola` paso 8 ("Ejecutar el orden"):
-- **Con terminal en el PC** (Cowork / `device_bash`): copia `salida/ordenar.ps1` a la raíz de la carpeta del ejecutivo y córrelo con `powershell -NoProfile -ExecutionPolicy Bypass -File ordenar.ps1 -Si`.
-- **Sin terminal, con control del computador:** copia `ordenar.ps1` y `ordenar_si.bat` a la raíz, pide acceso al Explorador de archivos, entra a la carpeta con clics y haz doble clic en `ordenar_si.bat`.
-- **Sin nada de eso:** copia `ordenar.ps1` y `ordenar.bat` a la raíz de la carpeta y pídele al ejecutivo que haga doble clic en `ordenar.bat`.
+- **Vía normal (Cowork):** lo haces tú en segundo plano, sin clics del ejecutivo y sin tomar el control de la pantalla: `python -X utf8 ejecutar_movimientos.py "<carpeta del ejecutivo>" <trabajo>/salida/movimientos.json` (o `ordenar.ps1 -Si` si la terminal es Windows sin Python).
+- **Solo si la sesión no puede mover archivos:** recomienda Cowork; si igual sigue aquí, copia `ordenar.ps1` y `ordenar.bat` a la raíz y pídele doble clic en `ordenar.bat`.
 - **Control:** `device_list_dir` recursivo: cada boleta está en su carpeta con su nombre, no quedan boletas sueltas y no queda ningún `ordenar.*` (el script se borra solo al terminar bien; si quedó, revisa el `ordenar_<fecha>.log`).
 
 ## Paso 5 · Cerrar
