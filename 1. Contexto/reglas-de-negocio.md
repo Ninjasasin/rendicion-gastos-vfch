@@ -36,7 +36,7 @@ Este es el **único lugar** donde están las reglas. El resto de los archivos ap
 | Qué se compara | El **monto de la boleta** (cobrado, con propina) contra el **monto en moneda de origen** de la línea | — |
 | Tolerancia de fecha | ± días entre la boleta y la línea | `cruce_tolerancia_dias` (hoy 2) |
 | Cruce válido | Solo si es **único** (la boleta tiene una sola línea posible y la línea una sola boleta) | — |
-| Empate entre boletas por una línea | Gana la pagada con tarjeta; después, la de fecha más cercana | — |
+| Empate entre boletas por una línea | Gana la que muestra los 4 dígitos de la tarjeta de la cartola; después, la pagada con tarjeta; después, la de fecha más cercana | — |
 | Empate entre líneas para una boleta | Gana la de fecha más cercana | — |
 | Si sigue el empate | **Duda**: se le pregunta al ejecutivo; su respuesta queda en "decisiones" del `cruce_AAAA-MM.json` | — |
 | Dos papeles para un mismo gasto (pro forma + voucher) | Un solo gasto con las dos imágenes, por decisión `adjuntar_a` | — |
@@ -46,6 +46,8 @@ Este es el **único lugar** donde están las reglas. El resto de los archivos ap
 | Regla | Valor hoy | Parámetro |
 |---|---|---|
 | Otra tarjeta | La boleta muestra otros 4 últimos dígitos que la tarjeta de la cartola → **personal** | — |
+| Tarjeta corporativa | La boleta muestra los 4 últimos dígitos de la tarjeta corporativa → es corporativa: si no está en esta cartola, queda **pendiente para la próxima** (nunca personal) | — |
+| Sin dígitos en la boleta | Muchas boletas corporativas no los muestran: se cruza por monto y fecha | — |
 | No está en la cartola y se pagó en efectivo u otra tarjeta | → **personal** | `medios_de_pago_personales` |
 | No está en la cartola y no se sabe cómo se pagó | → **pendiente** (puede salir en la próxima cartola); se revisa con el ejecutivo | — |
 | Dice "Cash"/efectivo pero sí está en la cartola | Se rinde igual y se avisa | — |
@@ -104,10 +106,12 @@ La cuenta contable la pone Rindegastos según la categoría (Gastos De Viajes = 
 |---|---|---|
 | Carpeta del ejecutivo | `Documentos\Rinde gastos\` (o una subcarpeta por ejecutivo si una persona rinde por varios) | — |
 | Carpeta del informe | Mismo nombre del informe; lleva boletas rendidas, cartola original y cartola marcada | — |
+| Cartola sin boletas | Igual va a una carpeta con el nombre que habría tenido su informe (aunque no se cree informe), para que no quede suelta | — |
+| Cómo se ordena | Los **originales se renombran y se mueven** (no se hacen copias). Con terminal en el PC (Cowork) lo hace Claude; sin terminal, el ejecutivo hace doble clic en `ordenar.bat` | — |
 | Carpeta del mes | `AAAA-MM` = **mes de la fecha de la boleta**; lleva lo no rendido (personales y pendientes) | — |
 | Nombre de cada boleta | Su monto con coma: `49,50.jpeg`; repetidos `49,50 (2).jpeg`; personales `49,50 - personal.jpeg` | `sufijo_boleta_personal` |
 | Decisiones de la corrida | `cruce_AAAA-MM.json` en la carpeta del ejecutivo (AAAA-MM = mes del estado de cuenta) | — |
-| Borrar | Claude no borra en el PC; dice qué se puede borrar | — |
+| Borrar | Nunca se borran boletas ni cartolas: solo se mueven. Si un nombre ya existe, se agrega " (2)" | — |
 
 ## 8. Lo que el agente nunca hace
 - Enviar un informe.
@@ -133,6 +137,16 @@ Se usa cuando el ejecutivo pide "crea mi informe de fondos por rendir" o similar
 | Número de documento | Solo si la boleta lo trae | — |
 | Control | Si el ejecutivo dice el monto del fondo, se compara con el total y se avisa si lo pasa | — |
 | Carpetas | Igual que §7: carpeta con el nombre del informe (boletas rendidas) y `AAAA-MM` (personales). Las que quedan "fuera" no se mueven | — |
+
+## 10. Solo ordenar boletas
+
+Si el ejecutivo pide "ordena mis boletas" (sin pedir rendir): skill `2. Skills/ordenar-boletas/SKILL.md`.
+
+| Regla | Valor hoy | Parámetro |
+|---|---|---|
+| Qué hace | Renombra cada boleta suelta por su monto y la mueve a la carpeta de su mes (`AAAA-MM` de la fecha de la boleta) | — |
+| Qué no hace | No lee cartolas, no crea informes, no toca Rindegastos, no mueve carpetas de informes | — |
+| Personales | Solo si el ejecutivo lo dice: `<monto> - personal` | `sufijo_boleta_personal` |
 
 ## Pendientes de definir (Ignacio)
 1. Categoría para tarjeta personal y las preguntas abiertas de `categorias.md` (Visitas vs. Representación, Oficina en viajes, etc.).

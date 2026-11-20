@@ -80,17 +80,15 @@ Igual que `rendir-cartola` paso 7, con estas diferencias:
 3. Agrega los gastos al informe ("+ Agregar gasto") y verifica N y total contra `fondo.py`.
 4. **No envíes el informe.**
 
-## Paso 6 · Ordenar las carpetas
+## Paso 6 · Ordenar las carpetas (renombrar y mover, sin copias)
 ```bash
 python -X utf8 preparar_archivo.py <carpeta_trabajo> "<carpeta de fotos>" --cruce cruce_fondo_AAAA-MM.json
 ```
-- `<Nombre del informe>\` con las boletas rendidas (renombradas por monto).
-- `AAAA-MM\` con las personales (`<monto> - personal`).
-- Las que quedaron "fuera" no se mueven.
-- Copia con `device_commit_files`, verifica tamaños y di qué se puede borrar (`borrar.txt`). Si una boleta venía de una carpeta `AAAA-MM` y ahora quedó en el informe, también se puede borrar de ahí.
+- `<Nombre del informe>\` con las boletas rendidas (renombradas por monto); `AAAA-MM\` con las personales (`<monto> - personal`). Las que quedaron "fuera" no se mueven.
+- Ejecuta el orden igual que `rendir-cartola` paso 8 ("Ejecutar el orden"): copiar `nuevos.json`, correr `ordenar.ps1` (con terminal) o pedir doble clic en `ordenar.bat` (sin terminal), y verificar.
 
 ## Paso 7 · Cerrar
-Resumen: informe (nombre, N gastos, total y moneda; en borrador), personales, fuera, conversiones hechas (tipo de cambio y quién lo dio), avisos (pro forma, propinas, categorías a revisar) y qué borrar. Si se aprendió algo de la grilla REEM (offsets reales, si acepta otra moneda), anótalo en `3. Memoria/reglas-aprendidas.md` y en `1. Contexto/rindegastos.md`.
+Resumen: informe (nombre, N gastos, total y moneda; en borrador), personales, fuera, conversiones hechas (tipo de cambio y quién lo dio), avisos (pro forma, propinas, categorías a revisar) y cómo quedó ordenada la carpeta. Si se aprendió algo de la grilla REEM (offsets reales, si acepta otra moneda), anótalo en `3. Memoria/reglas-aprendidas.md` y en `1. Contexto/rindegastos.md`.
 
 ## Checklist
 - [ ] Instrucción del ejecutivo traducida a listas (`incluir`, `personales`, `fuera`) y confirmada.
@@ -98,4 +96,4 @@ Resumen: informe (nombre, N gastos, total y moneda; en borrador), personales, fu
 - [ ] Tipo de cambio solo si lo dio el ejecutivo.
 - [ ] OK del ejecutivo antes de cargar.
 - [ ] Informe REEM en borrador con N gastos y total = `fondo.py`.
-- [ ] Carpetas copiadas y tamaños verificados.
+- [ ] Carpeta ordenada: originales renombrados y movidos (sin copias).

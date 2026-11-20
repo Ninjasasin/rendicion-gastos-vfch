@@ -7,6 +7,7 @@
 ## Probado y no probado
 - Probado: leer cartola USD y CLP, cruce, marcar PDF, armar carpetas, crear informe con cartola adjunta, crear gastos con Múltiples (proveedor/total/categoría/nota escribiendo, fechas con el JS, boletas con file_upload), agregar gastos al informe.
 - Fondo por rendir: `fondo.py`, `grilla.py --cruce/--offsets` y `preparar_archivo.py --cruce` probados con datos de prueba. **No probado en Rindegastos** (columnas de la grilla REEM y si acepta otra moneda).
+- `ordenar.ps1`/`ordenar.bat` (renombrar y mover sin copias): la lógica está probada simulando los movimientos sobre una copia de la carpeta de prueba (queda igual que la rendición de oct-2026, sin archivos sueltos). **El script en Windows no se ha corrido todavía**: en la primera corrida real hay que revisar el resultado con `device_list_dir` y el `.log`.
 - No probado todavía: `grilla.py` generando las acciones de punta a punta en una corrida nueva; la parte de categoría de `verificar_grilla.js`; cartola CLP con gastos con boleta; agregar gastos a un informe que ya fue enviado.
 
 ## Pendientes (decide Ignacio o se consulta)

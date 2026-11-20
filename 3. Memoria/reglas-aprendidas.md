@@ -10,4 +10,6 @@ _Formato: la regla en negrita y, después, qué pasó. Se agregan con fecha._
 - **"Cash" en la boleta no siempre es efectivo.** Una boleta decía Cash y el cargo estaba en la tarjeta (19-nov-2026). Si calza con la cartola, se rinde y se avisa.
 - **Chrome solo sube archivos traídos con device_stage_files** (carpeta `/mnt/user-data/uploads/…`). La ruta del PC y las copias en otras carpetas del espacio de trabajo se rechazan (19-nov-2026).
 - **En la cartola CLP la fecha viene pegada al detalle** ("02/10/267019 JV AERO") y "PAGAR HASTA 10/11/2026 $ 55.044" parece una línea: `leer_cartola.py` lo maneja (19-nov-2026).
+- **En PowerShell una lista de un solo par se "aplana"** (`@( @('a','b') )` queda como `'a','b'`): en `ordenar.ps1` cada movimiento se agrega con `$movs += ,@(origen, destino)` (20-nov-2026, revisión del script antes de usarlo).
+- **Si la sesión no tiene terminal en el PC, Claude no puede mover ni renombrar archivos** (solo leer y crear nuevos). Por eso existe `ordenar.bat`. En Cowork sí hay terminal (20-nov-2026).
 - **Cuando hay otra persona usando la misma sesión de Rindegastos, la pestaña puede cambiar sola.** Si la pantalla no es la esperada, parar y preguntar antes de seguir (19-nov-2026).

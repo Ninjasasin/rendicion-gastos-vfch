@@ -10,18 +10,20 @@ Hecho para los ejecutivos de Viñedos Familia Chadwick (VFCH). Mantenido por Ign
 3. Cruza cada boleta con su línea de la cartola. Las boletas que no están en la cartola quedan como **gasto personal**.
 4. Marca la cartola: **verde** = tiene boleta, **amarillo** = falta boleta.
 5. En Rindegastos crea el informe `TC Internacional - <Mes> <AAAA>` (o `TC Nacional`), le adjunta la cartola, crea los gastos con su boleta y los agrega al informe. **No lo envía.**
-6. Ordena tu carpeta: una carpeta con el nombre del informe (boletas rendidas + cartola) y una carpeta `AAAA-MM` con lo no rendido del mes.
+6. Ordena tu carpeta: renombra y mueve tus boletas (sin copias) a una carpeta con el nombre del informe (boletas rendidas + cartola) y a una carpeta `AAAA-MM` con lo no rendido del mes.
 
 ## Cómo se usa (ejecutivo)
 1. Crea en tu PC la carpeta **`Documentos\Rinde gastos\`** y deja ahí, sueltos:
    - el estado de cuenta en PDF (el que llega del banco), y
    - las fotos de tus boletas (como lleguen, por ejemplo de WhatsApp).
 2. Abre **Rindegastos** en Chrome con tu sesión iniciada, y ten activa la extensión **Claude in Chrome**.
-3. En la **app de escritorio de Claude**, conecta tu carpeta `Rinde gastos` con **"Add folder"**.
+3. En la **app de escritorio de Claude**, abre un chat en **Cowork** y conecta tu carpeta `Rinde gastos` con **"Add folder"**. (En Cowork Claude puede ordenar tu carpeta directamente; en otro tipo de chat te pedirá un doble clic en `ordenar.bat`.)
 4. Escríbele a Claude:
    > Usa el agente https://github.com/Ninjasasin/rendicion-gastos-vfch y rinde mi cartola.
 5. Claude te muestra lo que va a cargar y te pide el OK. Al final te deja la cartola marcada, el informe en borrador y un resumen de lo que falta.
 6. Revisa el informe en Rindegastos y **envíalo tú**.
+
+**Solo ordenar boletas:** "Usa el agente … y ordena mis boletas" → las renombra por monto y las deja en la carpeta de su mes, sin crear informes.
 
 **Fondo por rendir (efectivo):** deja las boletas en la misma carpeta y dile a Claude, por ejemplo:
 > Usa el agente https://github.com/Ninjasasin/rendicion-gastos-vfch. Las boletas de la carpeta 2026-10 son personales; con las que quedan crea mi informe de fondos por rendir del viaje a Rusia (fueron 1.500 dólares).

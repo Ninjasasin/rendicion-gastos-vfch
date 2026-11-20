@@ -11,6 +11,7 @@ _Agrega las nuevas al final, con fecha. No borres sin que Ignacio lo pida._
 - Cambios chicos en una sola pasada; sin QA pesado si son cosméticos.
 - Se escribe VFCH, nunca VFC.
 - **El informe queda en borrador. Lo envía el ejecutivo.**
+- **Nada de copias en el PC del ejecutivo**: las boletas se renombran y se mueven a su carpeta final; no se deja basura. (20-nov-2026)
 - **No preguntar por categorías.** Lo importante es que el informe quede creado con todos los gastos, boletas e info; la clasificación la corrige el ejecutivo al revisar. Ante la duda, Gastos De Viajes. (19-nov-2026)
 - Quiere poder revisar **todas las reglas en un solo lugar**: `1. Contexto/reglas-de-negocio.md`, con los valores en `parametros.json`. Las reglas de negocio no se escriben en otros archivos. (19-nov-2026)
 

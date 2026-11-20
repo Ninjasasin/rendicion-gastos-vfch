@@ -15,10 +15,13 @@ Reglas del cruce (en este orden):
   2. Si la boleta muestra los últimos 4 dígitos de OTRA tarjeta, es personal (no se cruza).
   3. Candidatas: líneas con el MISMO monto en moneda de origen y fecha a ± cruce_tolerancia_dias de la boleta.
   4. Se asignan primero los pares únicos (la boleta tiene una sola candidata y la línea una sola boleta).
-  5. Si hay empate: gana la boleta pagada con tarjeta sobre la de efectivo/desconocido, y después la de menor
-     diferencia de días. Si sigue el empate, queda como 'duda' para que decida el ejecutivo.
+  5. Si hay empate: gana la boleta que muestra los 4 últimos dígitos de la tarjeta de la cartola; después, la
+     pagada con tarjeta sobre la de efectivo/desconocido; después, la de menor diferencia de días. Si sigue el
+     empate, queda como 'duda' para que decida el ejecutivo.
   6. Boletas sin línea:
        - pagadas con un medio de medios_de_pago_personales (efectivo, otra tarjeta) -> 'personal'
+       - con los 4 dígitos de la tarjeta corporativa -> 'sin_cartola' marcada como corporativa (sale en la
+         próxima cartola; NUNCA personal)
        - el resto                                -> 'sin_cartola' (pendiente: puede salir en la próxima cartola)
   7. Las "decisiones" del archivo de cruce mandan sobre todo lo anterior:
        {"boleta": "<archivo>", "accion": "adjuntar_a", "linea": "USD-045", "motivo": "..."}
@@ -163,7 +166,9 @@ def cruzar(cartolas, boletas, decisiones):
         for lid, rs in por_linea.items():
             if len(rs) < 2:
                 continue
-            clave = lambda r: (0 if bol[r[0]].get('medio_pago') == 'tarjeta' else 1, r[1])
+            u4 = por_id[lid]['tarjeta_ult4']
+            clave = lambda r: (0 if (bol[r[0]].get('tarjeta_ult4') or '') == u4 else 1,
+                               0 if bol[r[0]].get('medio_pago') == 'tarjeta' else 1, r[1])
             rs = sorted(rs, key=clave)
             if clave(rs[0]) < clave(rs[1]):
                 a = rs[0][0]
@@ -181,7 +186,10 @@ def cruzar(cartolas, boletas, decisiones):
     for b in boletas:
         if b['archivo'] in estado:
             continue
-        if b.get('medio_pago') in PERSONALES:
+        if (b.get('tarjeta_ult4') or '') in tarjetas:
+            estado[b['archivo']] = ('sin_cartola', None, 'tarjeta corporativa ...%s, no está en esta cartola: '
+                                    'pendiente para la próxima' % b['tarjeta_ult4'])
+        elif b.get('medio_pago') in PERSONALES:
             estado[b['archivo']] = ('personal', None, 'no está en la cartola y se pagó en %s' % b['medio_pago'])
         else:
             estado[b['archivo']] = ('sin_cartola', None, 'no está en esta cartola')
