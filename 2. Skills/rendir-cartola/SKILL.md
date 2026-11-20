@@ -152,15 +152,16 @@ Carga las herramientas de Chrome en una sola llamada a ToolSearch (tabs_context_
 python -X utf8 preparar_archivo.py <carpeta_trabajo> "<carpeta de fotos>"
 ```
 - Arma el orden final (`reglas-de-negocio.md` §7): cada boleta rendida se **renombra por su monto y se mueve** a la carpeta del informe junto con su cartola; las no rendidas van a `AAAA-MM` (personales como `<monto> - personal`); la cartola que no tuvo boletas va igual a una carpeta con el nombre que habría tenido su informe. **No se hacen copias.**
-- Deja en `salida/`: `movimientos.json` (qué original va a dónde), `ordenar.ps1` y `ordenar.bat` (los ejecutan) y `nuevos/` + `nuevos.json` (archivos que generó el agente: cartolas marcadas y `cruce_AAAA-MM.json`).
+- Deja en `salida/`: `movimientos.json` (qué original va a dónde), `ordenar.ps1`, `ordenar_si.bat` y `ordenar.bat` (los ejecutan) y `nuevos/` + `nuevos.json` (archivos que generó el agente: cartolas marcadas y `cruce_AAAA-MM.json`).
 
 ### Ejecutar el orden
 1. Copia cada archivo de `nuevos.json` a la carpeta del ejecutivo con `device_commit_files` (`devicePath` = carpeta del ejecutivo + la ruta de `nuevos.json`).
 2. **Si la sesión tiene terminal en el PC** (Cowork: existe la herramienta `device_bash`):
    - Copia `salida/ordenar.ps1` a la **raíz** de la carpeta del ejecutivo (`device_commit_files`).
    - Córrelo desde esa carpeta: `powershell -NoProfile -ExecutionPolicy Bypass -File ordenar.ps1 -Si`.
-3. **Si no tiene terminal:** copia `ordenar.ps1` y `ordenar.bat` a la raíz de la carpeta y pídele al ejecutivo: "haz doble clic en **ordenar.bat**: te muestra la lista y te pide confirmar". Espera a que diga que lo hizo.
-4. **Control:** `device_list_dir` (recursivo): cada archivo de `movimientos.json` está en su destino, no quedan boletas ni cartolas sueltas de esta rendición, y `ordenar.ps1`/`ordenar.bat` ya no están (se borran solos al terminar bien). Si algo no calza, lee el `ordenar_<fecha>.log` que deja el script.
+3. **Si no tiene terminal pero sí control del computador** (herramientas `computer_*`): copia `ordenar.ps1` y `ordenar_si.bat` a la raíz; pide acceso al **Explorador de archivos** (queda en modo solo clic: no se puede escribir en la barra de direcciones, así que se navega con clics por las carpetas); entra a la carpeta y haz doble clic en `ordenar_si.bat` (corre sin preguntas). Luego suelta el control (`computer_release_lock`).
+4. **Si no tiene ninguna de las dos:** copia `ordenar.ps1` y `ordenar.bat` a la raíz de la carpeta y pídele al ejecutivo: "haz doble clic en **ordenar.bat**: te muestra la lista y te pide confirmar". Espera a que diga que lo hizo.
+5. **Control:** `device_list_dir` (recursivo): cada archivo de `movimientos.json` está en su destino, no quedan boletas ni cartolas sueltas de esta rendición, y `ordenar.ps1` y los `.bat` ya no están (se borran solos al terminar bien). Si algo no calza, lee el `ordenar_<fecha>.log` que deja el script.
 - El script **solo mueve**: nunca borra boletas ni cartolas, y si un nombre ya existe agrega " (2)".
 - Si una boleta pendiente de un `AAAA-MM` anterior se rindió ahora, el script la mueve desde esa carpeta a la del informe.
 
